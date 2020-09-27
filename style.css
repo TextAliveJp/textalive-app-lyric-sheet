@@ -1,0 +1,207 @@
+/* 背景 / Background */
+body {
+  background: #077;
+  background-image: linear-gradient(0deg, rgba(0,119,119,1) 0%, rgba(0,177,160,1) 100%);
+  background-attachment: fixed;
+  background-size: 100vw 100vh;
+}
+
+/* オーバーレイ / Overlay */
+#overlay {
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  background: #0006;
+  color: #fffc;
+  z-index: 5;
+}
+#overlay.disabled {
+  display: none
+}
+#overlay > p {
+  width: 100vw;
+  font-size: 40px;
+  text-align: center;
+}
+#overlay > p > span {
+  display: inline-block;
+  padding-right: 20px;
+  margin-right: 20px;
+  border-right: 1px solid #fff6;
+}
+
+/* フッターと音源 / Header and audio source */
+#header,
+#media {
+  /* ページ左に固定 / Stick to the page left */
+  position: fixed;
+  left: 0;
+  
+  /* 背景色と文字色 / Background and text color */
+  background: #000c;
+  color: #fff;
+
+  z-index: 1;
+}
+
+/* フッター / Footer */
+#header {
+  /* 上寄せ / Top-aligned */
+  top: 10px;
+
+  /* 少し余裕を持たせる / Box with a small padding */
+  padding: 10px 16px;
+  
+  /* フォントサイズ小さめ、太め / Small but bold typography */
+  font-size: 10.5px;
+  font-weight: bold;
+  
+  /* 子要素を横に並べて配置 / Align child content to the right */
+  display: flex;
+  
+  /* 子要素は縦に中央揃え / Vertically middle-aligned */
+  align-items: center;
+}
+
+/* 再生ボタン / Play button */
+#control {
+  font-size: 21px;
+  padding-right: 10px;
+  border-right: 1px solid #fff9;
+}
+#control.disabled {
+  display: none;
+}
+#control a {
+  color: #aff;
+  text-decoration: none;
+}
+#control a.disabled {
+  opacity: 0.3;
+}
+#control a:hover {
+  color: #dff;
+}
+
+/* アーティストと楽曲の情報 / Artist and song info */
+#meta {
+  padding-left: 10px;
+}
+#meta span {
+  font-weight: normal;
+}
+
+/* 音源 / Audio source */
+#media {
+  /* 下寄せ / Bottom-aligned */
+  bottom: 10px;
+}
+
+/**
+ * ビート情報が取れるようになったらビートバーを表示
+ * Show beat bar when beat information becomes available
+ */
+@keyframes activateBeatBar {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+/**
+ * ビート毎に右に広げてフェードアウト
+ * Make beat bar span to the right and then fade out
+ */
+@keyframes showBeatBar {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  50% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+/**
+ * 歌詞が下からせり出してくる
+ * Make lyrics text appear from the bottom
+ */
+@keyframes showLyrics {
+  0% {
+    transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* ビートバー / Beat bar */
+#bar {
+  opacity: 0;
+  height: 10px;
+  background: #aff;
+}
+#bar.active {
+  animation activateBeatBar 0.3s: 
+}
+#bar.beat {
+  animation: showBeatBar 0.5s;
+}
+
+/* 歌詞 / Lyrics */
+#lyrics {
+  z-index: 0;
+  padding: 3em 0 5em 0;
+  line-height: 1.6em;
+  font-size: 36px;
+  font-family: "M PLUS 1p";
+  font-weight: bold;
+  color: #aff;
+  text-shadow: 2px 2px 3px #364;
+  user-select: none;
+  cursor: pointer;
+
+  /* 歌詞をちょっと回転させる / Rotate text */
+  transform: rotateX(10deg) rotateY(-20deg);
+}
+#text > div {
+  /* 文字ごとに改行しない / No line-break per char */
+  display: inline-block;
+  /* 溢れた部分を隠す / Hide overflow content */
+  overflow: hidden;
+  /* 高さ指定で文字をあえて溢れさす / Make text overflow with height specified */
+  height: 45px;
+}
+#text > div > div {
+  animation: showLyrics 0.5s;
+}
+
+/**
+ * 名詞などを強調表示する
+ * Emphasize nouns
+ */
+#text .noun {
+  color: #fcd;
+  font-size: 40px;
+}
+
+/**
+ * フレーズ終わりで右にマージンを空けて読みやすくする
+ * Add right margin to the last char in phrases
+ */
+#text .lastChar {
+  margin-right: 40px;
+}
