@@ -161,7 +161,7 @@ function newChar(current) {
 
   // noun, lastChar クラスを必要に応じて追加
   const div = document.createElement("div");
-  div.className = classes.join();
+  div.className = classes.join(" ");
   div.appendChild(document.createTextNode(current.text));
 
   // 文字を画面上に追加
