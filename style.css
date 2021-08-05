@@ -1,7 +1,11 @@
 /* 背景 / Background */
 body {
-  background: #077;
-  background-image: linear-gradient(0deg, rgba(0,119,119,1) 0%, rgba(0,177,160,1) 100%);
+  background: rgb(255 148 56);
+  background-image: linear-gradient(
+    0deg,
+    rgb(255 148 56) 0%,
+    rgb(99 208 226) 100%
+  );
   background-attachment: fixed;
   background-size: 100vw 100vh;
 }
@@ -21,7 +25,7 @@ body {
   z-index: 5;
 }
 #overlay.disabled {
-  display: none
+  display: none;
 }
 #overlay > p {
   width: 100vw;
@@ -41,7 +45,7 @@ body {
   /* ページ左に固定 / Stick to the page left */
   position: fixed;
   left: 0;
-  
+
   /* 背景色と文字色 / Background and text color */
   background: #000c;
   color: #fff;
@@ -52,18 +56,18 @@ body {
 /* フッター / Footer */
 #header {
   /* 上寄せ / Top-aligned */
-  top: 10px;
+  top: 20px;
 
   /* 少し余裕を持たせる / Box with a small padding */
   padding: 10px 16px;
-  
+
   /* フォントサイズ小さめ、太め / Small but bold typography */
   font-size: 10.5px;
   font-weight: bold;
-  
+
   /* 子要素を横に並べて配置 / Align child content to the right */
   display: flex;
-  
+
   /* 子要素は縦に中央揃え / Vertically middle-aligned */
   align-items: center;
 }
@@ -78,14 +82,14 @@ body {
   display: none;
 }
 #control a {
-  color: #aff;
+  color: rgb(99 208 226);
   text-decoration: none;
 }
 #control a.disabled {
   opacity: 0.3;
 }
 #control a:hover {
-  color: #dff;
+  color: rgb(255 148 56);
 }
 
 /* アーティストと楽曲の情報 / Artist and song info */
@@ -100,6 +104,10 @@ body {
 #media {
   /* 下寄せ / Bottom-aligned */
   bottom: 10px;
+}
+#media.disabled > .textalive-media-wrapper {
+  width: 0;
+  height: 0;
 }
 
 /**
@@ -142,20 +150,22 @@ body {
 @keyframes showLyrics {
   0% {
     transform: translate3d(0, 100%, 0);
+    opacity: 0;
   }
   100% {
     transform: translate3d(0, 0, 0);
+    opacity: 1;
   }
 }
 
 /* ビートバー / Beat bar */
 #bar {
   opacity: 0;
-  height: 10px;
-  background: #aff;
+  height: 3px;
+  background: rgb(255 222 193);
 }
 #bar.active {
-  animation activateBeatBar 0.3s: 
+  animation: activateBeatBar 0.3s;
 }
 #bar.beat {
   animation: showBeatBar 0.5s;
@@ -165,25 +175,20 @@ body {
 #lyrics {
   z-index: 0;
   padding: 3em 0 5em 0;
-  line-height: 1.6em;
+  line-height: 2em;
   font-size: 36px;
-  font-family: "M PLUS 1p";
-  font-weight: bold;
-  color: #aff;
-  text-shadow: 2px 2px 3px #364;
+  font-family: "Shippori Mincho B1", serif;
+  color: rgb(255 222 193);
+  text-shadow: 2px 2px 3px rgb(228 169 33);
   user-select: none;
   cursor: pointer;
 
   /* 歌詞をちょっと回転させる / Rotate text */
-  transform: rotateX(10deg) rotateY(-20deg);
+  transform: rotateX(10deg) rotateY(-10deg);
 }
 #text > div {
   /* 文字ごとに改行しない / No line-break per char */
   display: inline-block;
-  /* 溢れた部分を隠す / Hide overflow content */
-  overflow: hidden;
-  /* 高さ指定で文字をあえて溢れさす / Make text overflow with height specified */
-  height: 45px;
 }
 #text > div > div {
   animation: showLyrics 0.5s;
@@ -194,7 +199,7 @@ body {
  * Emphasize nouns
  */
 #text .noun {
-  color: #fcd;
+  color: rgb(242 251 253);
   font-size: 40px;
 }
 
@@ -204,4 +209,31 @@ body {
  */
 #text .lastChar {
   margin-right: 40px;
+}
+
+#text .firstCharInEnglishWord {
+  margin-left: 20px;
+}
+
+#text .lastCharInEnglishWord {
+  margin-right: 20px;
+}
+
+#text .lastCharInEnglishWord + .firstCharInEnglishWord {
+  margin-left: 0;
+}
+
+#seekbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: rgba(255 255 255 / 40%);
+}
+
+#seekbar > div {
+  width: 0;
+  height: 100%;
+  background: rgba(255 255 255 / 80%);
 }
