@@ -11,7 +11,7 @@ const { Player } = TextAliveApp;
 // TextAlive Player を初期化
 const player = new Player({
   // トークンは https://developer.textalive.jp/profile で取得したものを使う
-  app: { token: "test" },
+  app: { token: "JY0mLoHiX3lPTJaS" },
 
   mediaElement: document.querySelector("#media"),
   mediaBannerPosition: "bottom right",
