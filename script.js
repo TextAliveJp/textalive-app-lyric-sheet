@@ -11,7 +11,10 @@ const { Player } = TextAliveApp;
 // TextAlive Player を初期化
 const player = new Player({
   // トークンは https://developer.textalive.jp/profile で取得したものを使う
-  app: { token: "JY0mLoHiX3lPTJaS" },
+  app: { token: "JY0mLoHiX3lPTJaS", parameters: [
+    {title: "背景グラデーション開始色", name: "gradationStartColor", className: "Color", iniitalValue: "#63d0e2" },
+    {title: "背景グラデーション終了色", name: "gradationEndColor", className: "Color", iniitalValue: "#ff9438" },
+  ] },
 
   mediaElement: document.querySelector("#media"),
   mediaBannerPosition: "bottom right",
@@ -47,6 +50,15 @@ player.addListener({
         },
       });
     }
+  },
+
+  /* パラメタが更新されたら呼ばれる */
+  onAppParameterUpdate: () => {
+    const params = player.app.options.parameters;
+    const sc = player.app.parameters.gradationStartColor, scString = sc ? `rgb(${sc.r}, ${sc.g}, ${sc.b})` : params[0].iniitalValue;
+    const ec = player.app.parameters.gradationEndColor, ecString = ec ? `rgb(${ec.r}, ${ec.g}, ${sc.b})` : params[1].iniitalValue;
+    document.body.style.backgroundColor = ecString;
+    document.body.style.backgroundImage = `linear-gradient(0deg, ${ecString} 0%, ${scString} 100%)`;
   },
 
   /* 楽曲が変わったら呼ばれる */
