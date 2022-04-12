@@ -12,8 +12,8 @@ const { Player } = TextAliveApp;
 const player = new Player({
   // トークンは https://developer.textalive.jp/profile で取得したものを使う
   app: { token: "JY0mLoHiX3lPTJaS", parameters: [
-    {title: "背景グラデーション開始色", name: "gradationStartColor", className: "Color", iniitalValue: "#63d0e2" },
-    {title: "背景グラデーション終了色", name: "gradationEndColor", className: "Color", iniitalValue: "#ff9438" },
+    {title: "Gradation start color", name: "gradationStartColor", className: "Color", initialValue: "#63d0e2" },
+    {title: "Gradation end color", name: "gradationEndColor", className: "Color", initialValue: "#ff9438" },
   ] },
 
   mediaElement: document.querySelector("#media"),
@@ -55,8 +55,8 @@ player.addListener({
   /* パラメタが更新されたら呼ばれる */
   onAppParameterUpdate: () => {
     const params = player.app.options.parameters;
-    const sc = player.app.parameters.gradationStartColor, scString = sc ? `rgb(${sc.r}, ${sc.g}, ${sc.b})` : params[0].iniitalValue;
-    const ec = player.app.parameters.gradationEndColor, ecString = ec ? `rgb(${ec.r}, ${ec.g}, ${sc.b})` : params[1].iniitalValue;
+    const sc = player.app.parameters.gradationStartColor, scString = sc ? `rgb(${sc.r}, ${sc.g}, ${sc.b})` : params[0].initialValue;
+    const ec = player.app.parameters.gradationEndColor, ecString = ec ? `rgb(${ec.r}, ${ec.g}, ${ec.b})` : params[1].initialValue;
     document.body.style.backgroundColor = ecString;
     document.body.style.backgroundImage = `linear-gradient(0deg, ${ecString} 0%, ${scString} 100%)`;
   },
