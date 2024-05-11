@@ -1,11 +1,7 @@
 /* 背景 / Background */
 body {
-  background: #ff9438;
-  background-image: linear-gradient(
-    0deg,
-    #ff9438 0%,
-    #63d0e2 100%
-  );
+  background: #c33c68;
+  background-image: linear-gradient(0deg, #eed475 0, #60a8a9 50%, #d7809e 100%);
   background-attachment: fixed;
   background-size: 100vw 100vh;
 }
@@ -178,8 +174,8 @@ body {
   line-height: 2em;
   font-size: 36px;
   font-family: "Shippori Mincho B1", serif;
-  color: rgb(255 222 193);
-  text-shadow: 2px 2px 3px rgb(228 169 33);
+  color: #e2f8fc;
+  text-shadow: 2px 2px 3px #e4215a;
   user-select: none;
   cursor: pointer;
 
@@ -189,6 +185,10 @@ body {
 #text > div {
   /* 文字ごとに改行しない / No line-break per char */
   display: inline-block;
+  /* 溢れた部分を隠す / Hide overflow content */
+  /* overflow: hidden; */
+  /* 高さ指定で文字をあえて溢れさす / Make text overflow with height specified */
+  /* height: 45px; */
 }
 #text > div > div {
   animation: showLyrics 0.5s;
@@ -199,7 +199,7 @@ body {
  * Emphasize nouns
  */
 #text .noun {
-  color: rgb(242 251 253);
+  color: #ddf9ff;
   font-size: 40px;
 }
 
