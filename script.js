@@ -47,7 +47,7 @@ const bar = document.querySelector("#bar");
 const textContainer = document.querySelector("#text");
 const seekbar = document.querySelector("#seekbar");
 const paintedSeekbar = seekbar.querySelector("div");
-let b, c;
+let lastTime = -1;
 
 player.addListener({
   /* APIの準備ができたら呼ばれる */
@@ -100,8 +100,8 @@ player.addListener({
       player.data.song.artist.name;
     document.querySelector("#song span").textContent = player.data.song.name;
 
-    // 最後に表示した文字の情報をリセット
-    c = null;
+    // 最後に取得した再生時刻の情報をリセット
+    lastTime = -1;
   },
 
   /* 再生コントロールができるようになったら呼ばれる */
@@ -118,18 +118,23 @@ player.addListener({
       parseInt((position * 1000) / player.video.duration) / 10
     }%`;
 
-    // 現在のビート情報を取得
-    let beat = player.findBeat(position);
-    if (b !== beat) {
-      if (beat) {
+    // 新しいビートを検出
+    const beats = player.findBeatChange(lastTime, position);
+    if (
+      lastTime >= 0 &&
+      // ↑初期化された直後はビート検出しない
+      beats.entered.length > 0
+      // ↑二拍ごとにしたければ
+      //   && beats.entered.find((b) => b.position % 2 === 1)
+      // のような条件を足してチェックすればよい
+    ) {
+      // ビート同期のアニメーションを発火させる
+      requestAnimationFrame(() => {
+        bar.className = "active";
         requestAnimationFrame(() => {
-          bar.className = "active";
-          requestAnimationFrame(() => {
-            bar.className = "active beat";
-          });
+          bar.className = "active beat";
         });
-      }
-      b = beat;
+      });
     }
 
     // 歌詞情報がなければこれで処理を終わる
@@ -138,20 +143,19 @@ player.addListener({
     }
 
     // 巻き戻っていたら歌詞表示をリセットする
-    if (c && c.startTime > position + 1000) {
+    if (lastTime > position + 1000) {
       resetChars();
     }
 
-    // 500ms先に発声される文字を取得
-    let current = c || player.video.firstChar;
-    while (current && current.startTime < position + 500) {
+    // 500ms先に発声される文字を検出
+    const chars = player.video.findCharChange(lastTime + 500, position + 500);
+    for (const c of chars.entered) {
       // 新しい文字が発声されようとしている
-      if (c !== current) {
-        newChar(current);
-        c = current;
-      }
-      current = current.next;
+      newChar(c);
     }
+
+    // 次回呼ばれるときのために再生時刻を保存しておく
+    lastTime = position;
   },
 
   /* 楽曲の再生が始まったら呼ばれる */
@@ -255,7 +259,7 @@ function newChar(current) {
  * Reset lyrics view
  */
 function resetChars() {
-  c = null;
+  lastTime = -1;
   while (textContainer.firstChild)
     textContainer.removeChild(textContainer.firstChild);
 }
