@@ -11,10 +11,29 @@ const { Player } = TextAliveApp;
 // TextAlive Player を初期化
 const player = new Player({
   // トークンは https://developer.textalive.jp/profile で取得したものを使う
-  app: { token: "JY0mLoHiX3lPTJaS", parameters: [
-    {title: "Gradation start color", name: "gradationStartColor", className: "Color", initialValue: "#63d0e2" },
-    {title: "Gradation end color", name: "gradationEndColor", className: "Color", initialValue: "#ff9438" },
-  ] },
+  app: {
+    token: "JY0mLoHiX3lPTJaS",
+    parameters: [
+      {
+        title: "Gradation start color",
+        name: "gradationStartColor",
+        className: "Color",
+        initialValue: "#eed475",
+      },
+      {
+        title: "Gradation middle color",
+        name: "gradationMiddleColor",
+        classname: "Color",
+        initialValue: "#60a8a9"
+      },
+      {
+        title: "Gradation end color",
+        name: "gradationEndColor",
+        className: "Color",
+        initialValue: "#d7809e",
+      },
+    ],
+  },
 
   mediaElement: document.querySelector("#media"),
   mediaBannerPosition: "bottom right",
@@ -39,14 +58,15 @@ player.addListener({
     if (!app.songUrl) {
       document.querySelector("#media").className = "disabled";
 
-      player.createFromSongUrl("https://piapro.jp/t/FDb1/20210213190029", {
+      player.createFromSongUrl("https://piapro.jp/t/hZ35/20240130103028", {
         video: {
-          // 音楽地図訂正履歴: https://songle.jp/songs/2121525/history
-          beatId: 3953882,
-          repetitiveSegmentId: 2099561,
-          // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FFDb1%2F20210213190029
-          lyricId: 52065,
-          lyricDiffId: 5093,
+          // 音楽地図訂正履歴
+          beatId: 4592293,
+          chordId: 2727635,
+          repetitiveSegmentId: 2824326,
+          // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FhZ35%2F20240130103028
+          lyricId: 59415,
+          lyricDiffId: 13962,
         },
       });
     }
@@ -55,10 +75,14 @@ player.addListener({
   /* パラメタが更新されたら呼ばれる */
   onAppParameterUpdate: () => {
     const params = player.app.options.parameters;
-    const sc = player.app.parameters.gradationStartColor, scString = sc ? `rgb(${sc.r}, ${sc.g}, ${sc.b})` : params[0].initialValue;
-    const ec = player.app.parameters.gradationEndColor, ecString = ec ? `rgb(${ec.r}, ${ec.g}, ${ec.b})` : params[1].initialValue;
+    const sc = player.app.parameters.gradationStartColor,
+      scString = sc ? `rgb(${sc.r}, ${sc.g}, ${sc.b})` : params[0].initialValue;
+    const mc = player.app.parameters.gradationMiddleColor,
+      mcString = mc ? `rgb(${mc.r}, ${mc.g}, ${mc.b})` : params[0].initialValue;
+    const ec = player.app.parameters.gradationEndColor,
+      ecString = ec ? `rgb(${ec.r}, ${ec.g}, ${ec.b})` : params[1].initialValue;
     document.body.style.backgroundColor = ecString;
-    document.body.style.backgroundImage = `linear-gradient(0deg, ${ecString} 0%, ${scString} 100%)`;
+    document.body.style.backgroundImage = `linear-gradient(0deg, ${ecString} 0%, ${mcString} 50%, ${scString} 100%)`;
   },
 
   /* 楽曲が変わったら呼ばれる */
