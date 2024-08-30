@@ -148,7 +148,8 @@ player.addListener({
     }
 
     // 500ms先に発声される文字を検出
-    const chars = player.video.findCharChange(lastTime + 500, position + 500);
+    // 初回は開始時からの差分区間、それ以降は前回実行時からの差分区間を検出
+    const chars = player.video.findCharChange(lastTime < 0 ? lastTime : lastTime + 500, position + 500);
     for (const c of chars.entered) {
       // 新しい文字が発声されようとしている
       newChar(c);
