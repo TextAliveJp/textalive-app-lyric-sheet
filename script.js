@@ -23,7 +23,7 @@ const player = new Player({
       {
         title: "Gradation middle color",
         name: "gradationMiddleColor",
-        classname: "Color",
+        className: "Color",
         initialValue: "#60a8a9"
       },
       {
