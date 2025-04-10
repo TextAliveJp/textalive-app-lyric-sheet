@@ -18,19 +18,19 @@ const player = new Player({
         title: "Gradation start color",
         name: "gradationStartColor",
         className: "Color",
-        initialValue: "#eed475",
+        initialValue: "#bfaefc",
       },
       {
         title: "Gradation middle color",
         name: "gradationMiddleColor",
         className: "Color",
-        initialValue: "#60a8a9"
+        initialValue: "#fea3db"
       },
       {
         title: "Gradation end color",
         name: "gradationEndColor",
         className: "Color",
-        initialValue: "#d7809e",
+        initialValue: "#9ae1dd",
       },
     ],
   },
@@ -58,15 +58,18 @@ player.addListener({
     if (!app.songUrl) {
       document.querySelector("#media").className = "disabled";
 
-      player.createFromSongUrl("https://piapro.jp/t/hZ35/20240130103028", {
+      // ストリートライト / 加賀(ネギシャワーP)
+      player.createFromSongUrl("https://piapro.jp/t/ULcJ/20250205120202", {
         video: {
           // 音楽地図訂正履歴
-          beatId: 4592293,
-          chordId: 2727635,
-          repetitiveSegmentId: 2824326,
-          // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FhZ35%2F20240130103028
-          lyricId: 59415,
-          lyricDiffId: 13962,
+          beatId: 4694275,
+          chordId: 2830730,
+          repetitiveSegmentId: 2946478,
+      
+          // 歌詞URL: https://piapro.jp/t/DPXV
+          // 歌詞タイミング訂正履歴: https://textalive.jp/lyrics/piapro.jp%2Ft%2FULcJ%2F20250205120202
+          lyricId: 67810,
+          lyricDiffId: 20654
         },
       });
     }
